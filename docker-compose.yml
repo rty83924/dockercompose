@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+        mysql:
+                image: mysql:5.7
+                container_name: mysqltest
+                environment:
+                     -   MYSQL_ROOT_PASSWORD=rty83924
+                networks:
+                     -  mysqlnetwork
+                ports:
+                     -  '3306:3306'
+                volumes:
+                     -  /var/date:/var/lib/mysql
+                restart: always
+        phpmyadmin:
+                image: phpmyadmin/phpmyadmin
+                environment:
+                     -   PMA_PASSWORD=rty83924
+                     -   PMA_ARBITRARY=1
+                     -   PMA_HOST=mysqltest
+                     -   PMA_PORT=3306
+                networks:
+                     -   mysqlnetwork
+                ports:
+                     -   '80:80'
+                restart: always  
+networks:
+        mysqlnetwork:
+                driver: bridge 
+                        
